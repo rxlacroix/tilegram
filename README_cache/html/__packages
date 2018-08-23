@@ -1,0 +1,12 @@
+base
+methods
+datasets
+utils
+grDevices
+graphics
+stats
+makeTilegram
+sp
+rworldmap
+ggplot2
+ggmap

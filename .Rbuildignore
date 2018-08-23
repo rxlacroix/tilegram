@@ -1,0 +1,8 @@
+^.*\.Rproj$
+^\.Rproj\.user$
+^docs$
+^readme.rmd$
+^_pkgdown\.yml$
+^README_files$
+^README_cache$
+^README.html$

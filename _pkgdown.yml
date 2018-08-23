@@ -1,0 +1,12 @@
+authors:
+  Luke Heley:
+    href: http://lajh87.gitlab.io
+navbar:
+  title: "makeTilegram"
+  type: inverse
+  left:
+    - text: "Reference"
+      href: "reference/"
+  right:
+    - icon: fa-gitlab
+      href: https://gitlab.com/lajh87/makeTilegram
