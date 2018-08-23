@@ -6,7 +6,9 @@ navbar:
   type: inverse
   left:
     - text: "Reference"
-      href: "reference/"
+      href: "reference/index.html"
+    - text: "News"
+      href: "news/index.html"
   right:
     - icon: fa-gitlab
       href: https://gitlab.com/lajh87/makeTilegram

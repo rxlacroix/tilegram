@@ -12,6 +12,10 @@ output:
 A tilegram is a tiled map where regions are adjusted to have the same size.
 
 ```{r,message=F, warning=F, results='asis',fig.width=5, fig.height=4.5}
+# Install package
+if(!"makeTilegram" %in% installed.packages()[,"Package"])
+  devtools::install_git("https://gitlab.com/lajh87/makeTilegram")
+
 # Load required packages
 require(makeTilegram)
 require(rworldmap)
