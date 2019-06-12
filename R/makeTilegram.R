@@ -1,13 +1,4 @@
 
-nc$id <- row.names(nc)
-
-nc <- st_cast(nc, to="POLYGON")
-
-nc$carea <- as.numeric(st_area(nc))
-nc <- nc[order(nc$carea, decreasing = TRUE),]
-
-
-nc <- nc[!duplicated(nc$id),]
 
 
 
@@ -128,6 +119,17 @@ hex_tiles <- function(x, cellsize=NULL){
 #' tileGram <- makeTilegram(afr)
 #' plot(tileGram)
 makeTilegram <- function(sp){
+  
+sp$id <- row.names(sp)
+
+sp <- st_cast(sp, to="POLYGON")
+
+sp$carea <- as.numeric(st_area(sp))
+sp <- sp[order(sp$carea, decreasing = TRUE),]
+
+
+sp <- sp[!duplicated(sp$id),]
+  
 sp <- st_transform(nc, 32663)
 tiles <- hex_tiles(as(sp, 'Spatial'))
 sp <- st_make_valid(st_as_sf(sp))
