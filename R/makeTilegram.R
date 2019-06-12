@@ -130,7 +130,7 @@ sp <- sp[order(sp$carea, decreasing = TRUE),]
 
 sp <- sp[!duplicated(sp$id),]
   
-sp <- st_transform(nc, 32663)
+sp <- st_transform(sp, 32663)
 tiles <- hex_tiles(as(sp, 'Spatial'))
 sp <- st_make_valid(st_as_sf(sp))
 tiles <- st_make_valid(st_as_sf(tiles))
