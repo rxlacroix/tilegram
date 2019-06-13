@@ -1,3 +1,7 @@
+#' @import sf
+#' @import units
+#' @import lwgeom
+#' @import dplyr
 
 
 
@@ -14,11 +18,11 @@ draw_hex <- function(area=hex_area(1), offset_x = 0, offset_y = 0, id=1, tessell
   A <- sin(deg2rad(30)) * side_length
   B <- sin(deg2rad(60)) * side_length
   C <- side_length
-  
+
   (x <- c(0, 0, B, 2*B, 2*B, B) + (offset_x*B*2) + ifelse(tessellate == T,  B, 0))
   (y <- c(A+C, A, 0, A, A+C, 2*C) + (offset_y*(A+C)))
-  
-  
+
+
   sp::Polygons(list(sp::Polygon(coords = matrix(c(x,y),ncol=2),hole = F)),ID=id)
 }
 
@@ -60,39 +64,39 @@ getAvgArea <- function(x){
 draw_hexTiles <- function(area, offset_x_start=0, offset_x_end=4, offset_y_start=0, offset_y_end =4){
   grid <- expand.grid(offset_x_start:offset_x_end, offset_y_start:offset_y_end)
   grid$tessellate <- grid[,2] %% 2 == 0
-  
+
   hexes <- sp::SpatialPolygons(lapply(1:nrow(grid), function(i){
     draw_hex(area, offset_x = grid[i,1], offset_y = grid[i,2], id =i, tessellate = grid[i,3])
-    
+
   }))
-  
+
   names(grid) <- c("offset_x", "offset_y", "tessellate")
-  
+
   grid <- data.frame(id = 1:nrow(grid),grid)
-  
+
   sp::SpatialPolygonsDataFrame(hexes, grid)
 }
 
 hex_tiles <- function(x, cellsize=NULL){
-  
+
   if(is.null(cellsize)) cellsize <- getAvgArea(x)*.9
-  
+
   b <- sp::bbox(x)
   dx <- b["x", "max"] - b["x", "min"]
   dy <- b["y", "max"] - b["y", "min"]
-  
+
   C <- hex_side(cellsize)
   A <- sin(deg2rad(30)) * C
   B <- sin(deg2rad(60)) * C
-  
+
   hexAcross <- ceiling(dx/(B*2))
   hexUp <- ceiling(dy/((A+C)))
-  
+
   offset_x_start <- floor(b["x", "min"]/(B*2))
   offset_y_start <- floor(b["y", "min"]/((A+C)))
   offset_x_end <- offset_x_start + hexAcross
   offset_y_end <- offset_y_start + hexUp
-  
+
   hex_grid <- draw_hexTiles(cellsize, offset_x_start, offset_x_end, offset_y_start, offset_y_end)
   sp::proj4string(hex_grid) <- sp::proj4string(x)
   return(hex_grid)
@@ -119,7 +123,7 @@ hex_tiles <- function(x, cellsize=NULL){
 #' tileGram <- makeTilegram(afr)
 #' plot(tileGram)
 makeTilegram <- function(sp){
-  
+
 sp$id <- row.names(sp)
 
 sp <- st_cast(sp, to="POLYGON")
@@ -129,13 +133,13 @@ sp <- sp[order(sp$carea, decreasing = TRUE),]
 
 
 sp <- sp[!duplicated(sp$id),]
-  
+
 sp <- st_transform(sp, 32663)
 tiles <- hex_tiles(as(sp, 'Spatial'))
 sp <- st_make_valid(st_as_sf(sp))
 tiles <- st_make_valid(st_as_sf(tiles))
 tiles <- tiles[sp, ]
-pts <- st_centroid(sp) 
+pts <- st_centroid(sp)
 rm(sp)
 gc()
 pts$pt_id <- row.names(pts)
@@ -158,7 +162,7 @@ tile_pref <- as.matrix(tile_pref)
  for (i in 1:nrow(tile_pref)) {
    id_solved[i] <- as.numeric(colnames(tile_pref[solved_cols[i]]))
  }
- 
+
  newDat <- data.frame(tile_region= row.names(tile_pref), id = id_solved, stringsAsFactors = F)
  newTiles <- tiles
 

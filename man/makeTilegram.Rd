@@ -4,12 +4,10 @@
 \alias{makeTilegram}
 \title{Make a Tilegram}
 \usage{
-makeTilegram(sp, cellsize = NULL)
+makeTilegram(sp)
 }
 \arguments{
 \item{sp}{A SpatialPolygonDataFrame}
-
-\item{cellsize}{The cellsize of the hexagons. If left blank then it will be based on the average size of the polygons in sp}
 }
 \value{
 A SpatialPolygonsDataFrame projected to EPSG:32663 equidistant grid
