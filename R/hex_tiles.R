@@ -2,7 +2,7 @@
 #' @export
 
 hex_tiles <- function(x, cellsize = NULL) {
-  if (is.null(cellsize)) cellsize <- getAvgArea(x)*0.9
+  if (is.null(cellsize)) cellsize <- getAvgArea(x)*0.6
 
   b <- sp::bbox(x)
   dx <- b["x", "max"] - b["x", "min"]
