@@ -8,13 +8,6 @@
 #' @return A SpatialPolygonsDataFrame of tessellated hexagons covering the bounding box of a SpatialPolygons
 #' @export
 #'
-#' @examples
-#' require(rworldmap);
-#' data("countriesCoarseLessIslands") #  Load simple map without islands
-#' afr <- countriesCoarseLessIslands[which(!is.na(countriesCoarseLessIslands@data$REGION) &
-#'                                          countriesCoarseLessIslands@data$REGION=="Africa"),]
-#' afr <- sp::spTransform(afr, CRS("+init=EPSG:32663")) # Project to equidistant grid
-#' plot(hex_tiles(afr)[afr,]) # Clip to original shape and plot
 
 draw_hexTiles <- function(area, offset_x_start=0, offset_x_end=4, offset_y_start=0, offset_y_end =4){
   grid <- expand.grid(offset_x_start:offset_x_end, offset_y_start:offset_y_end)

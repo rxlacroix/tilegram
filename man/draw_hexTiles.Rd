@@ -18,11 +18,3 @@ A SpatialPolygonsDataFrame of tessellated hexagons covering the bounding box of 
 \description{
 Draw a grid of tessellated hexagons over the bounding box of a SpatialPolygons object
 }
-\examples{
-require(rworldmap);
-data("countriesCoarseLessIslands") #  Load simple map without islands
-afr <- countriesCoarseLessIslands[which(!is.na(countriesCoarseLessIslands@data$REGION) &
-                                         countriesCoarseLessIslands@data$REGION=="Africa"),]
-afr <- sp::spTransform(afr, CRS("+init=EPSG:32663")) # Project to equidistant grid
-plot(hex_tiles(afr)[afr,]) # Clip to original shape and plot
-}

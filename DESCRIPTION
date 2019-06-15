@@ -5,7 +5,14 @@ Authors@R: person("Luke", "Heley", email = "lajh87@me.com",
                   role = c("aut", "cre"))
 Description: Transform spatial polygons into equal sized hexagons
   by minimising the distance between hexagon and the centre of the original polygon.
-Depends: R (>= 3.1.0)
+Depends: 
+  R (>= 3.1.0),
+  sf,
+  clue,
+  sp,
+  dplyr,
+  lwgeom,
+  units
 License: MIT License + file LICENSE
 LazyData: true
 RoxygenNote: 6.1.1

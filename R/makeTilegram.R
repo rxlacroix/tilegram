@@ -1,8 +1,22 @@
-#' @import sf
-#' @import units
-#' @import lwgeom
-#' @import dplyr
-#' @import clue
+#' @import sf units lwgeom dplyr clue
+NULL
+#' Make a Tilegram
+#'
+#' @param x An sf object
+#'
+#' @return A sf projected to EPSG:32663 equidistant grid
+#' @export
+#'
+#' @examples
+#' library(sf)
+#' nc <- st_read(system.file("shape/nc.shp", package="sf"))
+#' ncTileGram <- makeTilegram(nc)
+#'
+#'
+#' require(GADMTools);
+#' CH_cantons <- gadm_sf_loadCountries("CHE", level=2, basefile="./")
+#' CH_cantons <- CH_cantons$sf
+#' CH_cantons_tilegram <- makeTilegram(CH_cantons)
 
 
 makeTilegram <- function(sp){
