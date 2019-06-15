@@ -23,7 +23,9 @@ NULL
 #' ggplot() +
 #'   geom_sf(data = CH_districts_tilegram, aes(fill = NAME_1))
 makeTilegram <- function(sp) {
-  sp$id <- row.names(sp)
+  sp$id <- 1:nrow(sp)
+    sp.df <- sp
+  st_geometry(sp.df) <- NULL
 
   sp <- st_cast(sp, to = "POLYGON")
 
@@ -32,23 +34,24 @@ makeTilegram <- function(sp) {
 
 
   sp <- sp[!duplicated(sp$id), ]
+
   sp <- sp[order(sp$id, decreasing = FALSE), ]
-  sp.df <- sp
-  st_geometry(sp.df) <- NULL
+  row.names(sp) <- sp$id
 
   sp <- st_transform(sp, 32663)
   tiles <- hex_tiles(as(sp, "Spatial"))
   sp <- st_make_valid(st_as_sf(sp))
   tiles <- st_make_valid(st_as_sf(tiles))
   tiles <- tiles[sp, ]
+  tiles$tile_id <- as.numeric(row.names(tiles))
+
   pts <- st_centroid(sp)
   pts$pt_id <- row.names(pts)
   tileCentroids <- st_centroid(tiles)
-  tileCentroids$id <- row.names(tileCentroids)
   tile_pref <- data.frame()
   for (i in 1:nrow(pts)) {
     distance <- drop_units(st_distance(pts[i, ], tileCentroids, by_element = F))
-    colnames(distance) <- tileCentroids$id
+    colnames(distance) <- tileCentroids$tile_id
     y <- t(apply(distance, 1, function(x) rank(x, ties.method = "random")))
     tile_pref <- rbind(tile_pref, y)
     cat("Feature ", i, "on ", nrow(pts), " : ", (i / nrow(pts) * 100), " % \n")
@@ -62,12 +65,11 @@ makeTilegram <- function(sp) {
     id_solved[i] <- as.numeric(colnames(tile_pref[solved_cols[i]]))
   }
 
-  newDat <- data.frame(tile_region = row.names(tile_pref), id = id_solved, stringsAsFactors = F)
+  newDat <- data.frame(tile_region = as.numeric(row.names(tile_pref)), id = id_solved, stringsAsFactors = F)
   newTiles <- tiles
 
 
-  newTiles <- full_join(newTiles, newDat, by = "id")
-  newTiles <- newTiles[!is.na(newTiles$tile_region), ]
+  newTiles <- merge(newTiles, newDat, by.x = "tile_id", by.y = "id")
 
   newTiles <- merge(newTiles, sp.df, by.x = "tile_region", by.y = "id")
 
