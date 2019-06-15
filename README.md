@@ -14,6 +14,13 @@ A tilegram is a tiled map where regions are adjusted to have the same size.
   library(sf)
  nc <- st_read(system.file("shape/nc.shp", package="sf"))
  ncTileGram <- makeTilegram(nc)
- plot(ncTileGram["id"])
+ plot(ncTileGram["NWBIR74"])
 
 ```
+
+![](https://i.ibb.co/S7c79Nd/Screenshot-from-2019-06-15-18-19-37.png)
+![](https://i.ibb.co/w7hQBX9/Screenshot-from-2019-06-15-18-20-30.png)
+
+Swiss municipalities
+
+![](https://i.ibb.co/TYVxcPQ/Screenshot-from-2019-06-15-18-16-54.png)
