@@ -23,4 +23,4 @@ A tilegram is a tiled map where regions are adjusted to have the same size.
 
 Swiss municipalities
 
-![](https://i.ibb.co/ZBy2dCm/Screenshot-from-2019-06-15-19-17-37.png)
+![](https://i.ibb.co/nLZqGvS/Screenshot-from-2019-06-15-21-28-37.png)
