@@ -42,7 +42,6 @@ makeTilegram <- function(sp) {
   tiles <- hex_tiles(as(sp, "Spatial"))
   sp <- st_make_valid(st_as_sf(sp))
   tiles <- st_make_valid(st_as_sf(tiles))
-  tiles <- tiles[sp, ]
   tiles$tile_id <- as.numeric(row.names(tiles))
 
   pts <- st_centroid(sp)
