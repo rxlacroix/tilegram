@@ -17,12 +17,17 @@ Make a Tilegram
 }
 \examples{
 library(sf)
-nc <- st_read(system.file("shape/nc.shp", package="sf"))
+nc <- st_read(system.file("shape/nc.shp", package = "sf"))
 ncTileGram <- makeTilegram(nc)
 
 
-require(GADMTools);
-CH_cantons <- gadm_sf_loadCountries("CHE", level=2, basefile="./")
-CH_cantons <- CH_cantons$sf
-CH_cantons_tilegram <- makeTilegram(CH_cantons)
+require(GADMTools)
+CH_districts <- gadm_sf_loadCountries("CHE", level = 2, basefile = "./")
+CH_districts <- CH_districts$sf
+CH_districts_tilegram <- makeTilegram(CH_districts)
+ggplot() +
+  geom_sf(data = CH_districts, aes(fill = NAME_1))
+
+ggplot() +
+  geom_sf(data = CH_districts_tilegram, aes(fill = NAME_1))
 }

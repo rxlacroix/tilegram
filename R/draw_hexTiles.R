@@ -9,18 +9,17 @@
 #' @export
 #'
 
-draw_hexTiles <- function(area, offset_x_start=0, offset_x_end=4, offset_y_start=0, offset_y_end =4){
+draw_hexTiles <- function(area, offset_x_start = 0, offset_x_end = 4, offset_y_start = 0, offset_y_end = 4) {
   grid <- expand.grid(offset_x_start:offset_x_end, offset_y_start:offset_y_end)
-  grid$tessellate <- grid[,2] %% 2 == 0
+  grid$tessellate <- grid[, 2] %% 2 == 0
 
-  hexes <- sp::SpatialPolygons(lapply(1:nrow(grid), function(i){
-    draw_hex(area, offset_x = grid[i,1], offset_y = grid[i,2], id =i, tessellate = grid[i,3])
-
+  hexes <- sp::SpatialPolygons(lapply(1:nrow(grid), function(i) {
+    draw_hex(area, offset_x = grid[i, 1], offset_y = grid[i, 2], id = i, tessellate = grid[i, 3])
   }))
 
   names(grid) <- c("offset_x", "offset_y", "tessellate")
 
-  grid <- data.frame(id = 1:nrow(grid),grid)
+  grid <- data.frame(id = 1:nrow(grid), grid)
 
   sp::SpatialPolygonsDataFrame(hexes, grid)
 }

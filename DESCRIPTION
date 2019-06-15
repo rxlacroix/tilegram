@@ -1,9 +1,9 @@
 Package: tilegram
-Title: Create a Tilegram from a Spatial Polygon(s) Object
+Title: Create a Tilegram from a sf Object
 Version: 0.1
 Authors@R: person("Luke", "Heley", email = "lajh87@me.com",
                   role = c("aut", "cre"))
-Description: Transform spatial polygons into equal sized hexagons
+Description: Transform sf into equal sized hexagons
   by minimising the distance between hexagon and the centre of the original polygon.
 Depends: 
   R (>= 3.1.0),
