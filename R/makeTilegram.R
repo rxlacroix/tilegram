@@ -48,13 +48,22 @@ makeTilegram <- function(sp) {
   pts$pt_id <- row.names(pts)
   tileCentroids <- st_centroid(tiles)
   tile_pref <- data.frame()
-  for (i in 1:nrow(pts)) {
-    distance <- drop_units(st_distance(pts[i, ], tileCentroids, by_element = F))
+  if(nrow(pts) < 300){
+    distance <- drop_units(st_distance(pts, tileCentroids, by_element = F))
     colnames(distance) <- tileCentroids$tile_id
-    y <- t(apply(distance, 1, function(x) rank(x, ties.method = "random")))
-    tile_pref <- rbind(tile_pref, y)
-    cat("Feature ", i, "on ", nrow(pts), " : ", (i / nrow(pts) * 100), " % \n")
+    tile_pref <- t(apply(distance, 1, function(x) rank(x, ties.method = "random")))
+
+  } else {
+    for (i in 1:nrow(pts)) {
+      distance <- drop_units(st_distance(pts[i, ], tileCentroids, by_element = F))
+      colnames(distance) <- tileCentroids$tile_id
+      y <- t(apply(distance, 1, function(x) rank(x, ties.method = "random")))
+      tile_pref <- rbind(tile_pref, y)
+      cat("Feature ", i, "on ", nrow(pts), " : ", (i / nrow(pts) * 100), " % \n")
+    }
+
   }
+
   tile_pref <- as.matrix(tile_pref)
   solved <- clue::solve_LSAP(tile_pref, maximum = FALSE)
   solved_cols <- c(as.numeric(solved))
